@@ -54,4 +54,9 @@ public class Card {
 	public void refresh() {
 		this.status = 0;
 	}
+	
+	/*µÃµ½ÅÆµÄ×´Ì¬*/
+	public int getStatus() {
+		return this.status;
+	}
 }
