@@ -8,7 +8,9 @@ public class Card {
 	/*扑克牌的状态 0-在牌库 1-在场上 2-在弃牌区*/
 	private int status;
 	
-	/*构造函数*/
+	/**
+	 * 构造函数
+	 * */
 	public Card(int type, String suit) {
 		this.type = type;
 		this.suit = suit;
