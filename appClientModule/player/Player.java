@@ -7,6 +7,11 @@ public class Player {
 	private int money;
 	private ArrayList<Hand> hands = new ArrayList<Hand>();
 	
+	public Player(String playername, int money) {
+		this.playername = playername;
+		this.money = money;
+	}
+	
 	public String getPlayername() {
 		return playername;
 	}

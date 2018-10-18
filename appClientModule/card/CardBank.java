@@ -14,7 +14,7 @@ public class CardBank {
 	/*场上的牌*/
 	private ArrayList<Card> cardsOnStage;
 	
-	/*棋牌区的牌*/
+	/*弃牌区的牌*/
 	private ArrayList<Card> cardsDropped;
 	
 	/*构造函数*/

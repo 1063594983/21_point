@@ -7,6 +7,7 @@ import card.Card;
 public class Hand {
 	private int bet;
 	private int totalpoint;
+	private int a_num; // A的数量
 	private ArrayList<Card> cards = new ArrayList<Card>();
 	
 	/*
@@ -14,6 +15,8 @@ public class Hand {
 	 */
 	public Hand(int bet) {
 		this.bet = bet;
+		totalpoint = 0;
+		a_num = 0;
 	}
 	
 	/*
@@ -24,13 +27,18 @@ public class Hand {
 	}
 	public void setBet(int bet) {
 		this.bet = bet;
-		totalpoint = 0;
 	}
 	
 	/*
 	 * 获取总点数
 	 */
-	public int getTotolPoint() {
+	public int getTotalPoint() {
+		for(int i = 0; i < a_num; i++) {
+			if(totalpoint <= 21) break;
+			else {
+				totalpoint -= 10;
+			}
+		}
 		return totalpoint;
 	}
 	
@@ -39,16 +47,21 @@ public class Hand {
 	 */
 	public void addCard(Card card) {
 		cards.add(card);
-		totalpoint += card.getValue();
+		if(card.getValue() != 1)
+			totalpoint += card.getValue();
+		else {
+			a_num++;
+			totalpoint += 11;
+		}
 	}
 	
 	/*
 	 * 一局游戏结束时将手中的牌放入弃牌池
 	 */
 	public void dropCard() {
-		for(int i = 0; i < cards.size(); i++)
-			cards.get(i).drop();
 		cards.clear();
+		totalpoint = 0;
+		a_num = 0;
 	}
 	
 	/*
