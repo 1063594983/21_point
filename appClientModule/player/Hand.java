@@ -2,21 +2,25 @@ package player;
 
 import java.util.ArrayList;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.BlockAction;
+
 import card.Card;
 
 public class Hand {
 	private int bet;
-	private int totalpoint;
+	private int totalPoint;
 	private int a_num; // A的数量
 	private ArrayList<Card> cards = new ArrayList<Card>();
+	private boolean isBlackJack;
 	
 	/*
 	 * 构造函数
 	 */
 	public Hand(int bet) {
 		this.bet = bet;
-		totalpoint = 0;
+		totalPoint = 0;
 		a_num = 0;
+		isBlackJack = false;
 	}
 	
 	/*
@@ -25,21 +29,31 @@ public class Hand {
 	public int getBet() {
 		return bet;
 	}
+	
 	public void setBet(int bet) {
 		this.bet = bet;
+		System.out.println("赌注已加至：" + bet);
 	}
 	
+	public boolean isBlackJack() {
+		return isBlackJack;
+	}
+
 	/*
 	 * 获取总点数
 	 */
 	public int getTotalPoint() {
-		for(int i = 0; i < a_num; i++) {
-			if(totalpoint <= 21) break;
+		totalPoint = 0;
+		for (int i = 0; i < cards.size(); i++) totalPoint += cards.get(i).getValue();
+		for (int i = 0; i < a_num; i++) {
+			if (totalPoint + 10 <= 21) {
+				totalPoint += 10;
+			}
 			else {
-				totalpoint -= 10;
+				break;
 			}
 		}
-		return totalpoint;
+		return totalPoint;
 	}
 	
 	/*
@@ -47,11 +61,9 @@ public class Hand {
 	 */
 	public void addCard(Card card) {
 		cards.add(card);
-		if(card.getValue() != 1)
-			totalpoint += card.getValue();
-		else {
+		totalPoint += card.getValue();
+		if(card.getValue() == 1) {
 			a_num++;
-			totalpoint += 11;
 		}
 	}
 	
@@ -60,16 +72,29 @@ public class Hand {
 	 */
 	public void dropCard() {
 		cards.clear();
-		totalpoint = 0;
+		totalPoint = 0;
 		a_num = 0;
+		isBlackJack = false;
 	}
 	
 	/*
 	 * 展示这一手牌
 	 */
 	public void showCards() {
+		System.out.print("目前手牌：");
 		for(int i = 0; i < cards.size(); i++)
-			System.out.println(cards.get(i).getName());
+			System.out.print(cards.get(i).getName() + " ");
+		System.out.print("\n");
+	}
+	
+	//显示总点数
+	public void showTotalPoint() {
+		System.out.println("总点数：" + this.getTotalPoint());
+	}
+
+	//判断是否是BlackJack
+	public void judgeBlackJack() {
+		if (cards.size() == 2 && this.getTotalPoint() == 21) isBlackJack = true;
 	}
 	
 }

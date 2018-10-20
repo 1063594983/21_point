@@ -6,10 +6,12 @@ public class Player {
 	private String playername;
 	private int money;
 	private ArrayList<Hand> hands = new ArrayList<Hand>();
+	private int winCount;
 	
 	public Player(String playername, int money) {
 		this.playername = playername;
 		this.money = money;
+		winCount = 0;
 	}
 	
 	public String getPlayername() {
@@ -25,6 +27,32 @@ public class Player {
 		this.money = money;
 	}
 	
+	public ArrayList<Hand> getHands() {
+		return hands;
+	}
+	
+	public int getWinCount() {
+		return winCount;
+	}
+
+	//一手牌赢了，玩家winCount++，并且赢得赌注
+	public void win(int bet) {
+		winCount++;
+		changeMoney(bet);
+	}
+	
+	//一手牌输了，玩家失去赌注
+	public void lose(int bet) {
+		changeMoney(-bet);
+	}
+	
+	//玩家所有手牌中赌注的总和
+	public int getAllBets() {
+		int totalBet = 0;
+		for (int i = 0; i < hands.size(); i++) totalBet += hands.get(i).getBet();
+		return totalBet;
+	}
+	
 	/*
 	 * 增加一手牌
 	 */
@@ -38,6 +66,7 @@ public class Player {
 	public void clearHand() {
 		for(int i = 0; i < hands.size(); i++) 
 			hands.get(i).dropCard();
+		hands.clear();
 	}
 	
 	/*
@@ -46,4 +75,10 @@ public class Player {
 	public void changeMoney(int bet) {
 		money += bet;
 	}
+	
+	//显示该玩家赢的局数
+	public void showWinCount() {
+		System.out.println("玩家" + playername + "赢了" + winCount + "场");
+	}
+	
 }
